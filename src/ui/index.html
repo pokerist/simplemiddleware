@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HikCentral Middleware UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HikCentral Middleware</h1>
+            <div class="status-bar">
+                <span id="connection-status" class="status connected">Connected to Middleware</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="panel request-panel">
+                <h2>Request Configuration</h2>
+                
+                <div class="form-group">
+                    <label for="endpoint">API Endpoint</label>
+                    <input type="text" id="endpoint" placeholder="/artemis/api/resource/v1/person/single/add" value="/artemis/api/resource/v1/person/single/add">
+                </div>
+
+                <div class="form-group">
+                    <label for="method">Method</label>
+                    <select id="method">
+                        <option value="POST">POST</option>
+                        <option value="GET">GET</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                    <label for="payload">Payload (JSON)</label>
+                    <textarea id="payload" placeholder='{ "key": "value" }'>{
+    "personId": "test001",
+    "personName": "Test User",
+    "gender": "1",
+    "orgIndexCode": "root000000"
+}</textarea>
+                </div>
+
+                <div class="actions">
+                    <div class="presets">
+                        <span>Presets:</span>
+                        <button class="preset-btn" data-preset="add">Add Person</button>
+                        <button class="preset-btn" data-preset="search">Search Person</button>
+                        <button class="preset-btn" data-preset="delete">Delete Person</button>
+                    </div>
+                    <button id="execute-btn" class="primary-btn">EXECUTE</button>
+                </div>
+            </div>
+
+            <div class="panel response-panel">
+                <h2>Response</h2>
+                <div id="loader" class="loader hidden"></div>
+                <div id="response-viewer" class="code-viewer">Waiting for request...</div>
+                
+                <div class="response-meta hidden" id="response-meta">
+                    <span id="status-code"></span>
+                    <span id="duration"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
