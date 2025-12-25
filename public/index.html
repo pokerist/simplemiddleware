@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyve ↔ HikCentral Middleware</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; }
+        h1, h2 { color: #333; }
+        .section { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        .btn { padding: 8px 15px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        .btn:hover { background: #0056b3; }
+        .btn-danger { background: #dc3545; }
+        .input-group { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 8px; box-sizing: border-box; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; border: 1px solid #ccc; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+    <h1>Lyve ↔ HikCentral Middleware</h1>
+
+    <!-- 1. Test Auth -->
+    <div class="section">
+        <h2>1️⃣ HikCentral Connectivity</h2>
+        <button class="btn" onclick="testAuth()">Test Authentication</button>
+        <div id="authResult"></div>
+    </div>
+
+    <!-- 2. Users / Residents -->
+    <div class="section">
+        <h2>2️⃣ Residents (Users)</h2>
+        
+        <div class="input-group">
+            <label>Owner ID (Lyve)</label>
+            <input type="text" id="resOwnerId" placeholder="lyve_123">
+        </div>
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="resName" placeholder="Ahmed Wasfy">
+        </div>
+        <div class="input-group">
+            <label>Email</label>
+            <input type="text" id="resEmail" placeholder="ahmed@test.com">
+        </div>
+        <button class="btn" onclick="createResident()">Create Resident</button>
+        <button class="btn" onclick="loadResidents()">Refresh List</button>
+
+        <h3>Local Residents List</h3>
+        <table id="residentsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Lyve ID</th>
+                    <th>Name</th>
+                    <th>Hik ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="qrResult"></div>
+    </div>
+
+    <!-- 3. Visitors -->
+    <div class="section">
+        <h2>3️⃣ Visitors</h2>
+        <div class="input-group">
+            <label>Select Resident (Host)</label>
+            <select id="visitorHost"></select>
+        </div>
+        <div class="input-group">
+            <label>Visitor Name</label>
+            <input type="text" id="visitorName" placeholder="Visitor Name">
+        </div>
+        <button class="btn" onclick="createVisitor()">Create Visitor</button>
+        <button class="btn" onclick="loadVisitors()">Refresh List</button>
+
+        <h3>Visitors List</h3>
+        <table id="visitorsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Host</th>
+                    <th>Visitor Name</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- 4. Raw API -->
+    <div class="section">
+        <h2>4️⃣ Raw HikCentral API Tester</h2>
+        <div class="input-group">
+            <label>Method</label>
+            <select id="rawMethod">
+                <option value="POST">POST</option>
+                <option value="GET">GET</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Path</label>
+            <input type="text" id="rawPath" placeholder="/artemis/api/resource/v1/person/single/add">
+        </div>
+        <div class="input-group">
+            <label>Body (JSON)</label>
+            <textarea id="rawBody" rows="5">{}</textarea>
+        </div>
+        <button class="btn" onclick="sendRaw()">Send Request</button>
+        
+        <h3>Response</h3>
+        <pre id="rawResponse">No response yet.</pre>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
