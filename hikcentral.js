@@ -33,14 +33,10 @@ function sign(method, path, headers, body) {
     // Construct String-To-Sign
     let stringToSign = `${method}\n`;
     stringToSign += `${accept}\n`;
-    
-    if (contentMd5) {
-        stringToSign += `${contentMd5}\n`;
-    }
-    
+    stringToSign += `${contentMd5}\n`;
     stringToSign += `${contentType}\n`;
+    stringToSign += `\n`; // Date (empty)
     
-    // Custom headers sorted
     stringToSign += `x-ca-key:${xCaKey}\n`;
     stringToSign += `x-ca-nonce:${xCaNonce}\n`;
     stringToSign += `x-ca-timestamp:${xCaTimestamp}\n`;
@@ -75,7 +71,7 @@ async function request(method, path, body = null) {
     headers['X-Ca-Signature'] = signature;
 
     try {
-        const response = await axios({
+        const response = await axios({ 
             method: method,
             url: url,
             headers: headers,
